@@ -2,32 +2,27 @@ import unittest
 import os
 import configparser
 import main
-
-CONFIG_FILE = './config/config.ini'
-DATA_FILE = './config/bookshelf_data.ini'
-
-config = configparser.ConfigParser()
-config.read(CONFIG_FILE)
-
-data = configparser.ConfigParser()
-data.read(DATA_FILE)
-
-WORKING_DIR = config.get('DIRECTORIES', 'bookshelf_path')
-current_book = data.getint('bookshelf', 'selected_book')
-
-BASE_PATH = config.get('DIRECTORIES', 'base_path')
+import shutil
+from config.config import *
 
 
 class TestMain(unittest.TestCase):
 
     def setUp(self):
         global path
-        path = os.path.join(BASE_PATH, WORKING_DIR)
+        path = os.path.join(TEST_MAIN, BOOKSHELF_PATH)
+        pass
+
+    def teardown(self):
+        shutil.rmtree(path)
+        pass
 
     def test_dir_creation(self):
-        main.main()
         path_exists = os.path.exists(path)
         self.assertTrue(path_exists)
+
+    def test_book_creation(self):
+        pass
 
 
 if __name__ == '__main__':

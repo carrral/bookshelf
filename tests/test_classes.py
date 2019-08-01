@@ -2,44 +2,25 @@ import unittest
 from bookshelf_modules import bookshelf_modules as bs
 import os
 import shutil
-import configparser
-
-
-# Config / Bookshelf data
-
-CONFIG_FILE = './config/config.ini'
-BOOKSHELF_DATA = './config/bookshelf_data.ini'
-
-config = configparser.ConfigParser()
-config.read(CONFIG_FILE)
-
-bookshelf_data = configparser.ConfigParser()
-bookshelf_data.read(BOOKSHELF_DATA)
-
-
-WORKING_DIRECTORY = config['test']['test_dir']
-
-
-class TestSettings(unittest.TestCase):
-    def test_config_import(self):
-        self.assertTrue(config.has_section('test'))
+from config.config import *
 
 
 class BookshelfTest(unittest.TestCase):
 
     def setUp(self):
         global bookshelf, book
-        bookshelf = bs.Bookshelf(WORKING_DIRECTORY)
+        bookshelf = bs.Bookshelf(TESTING_DIRECTORY)
         bookshelf.new_book('Title')
 
     def tearDown(self):
-        shutil.rmtree(os.path.join(WORKING_DIRECTORY, 'bookshelf'))
+        shutil.rmtree(os.path.join(TESTING_DIRECTORY, 'bookshelf'))
+        pass
 
     def test_dir_created(self):
-        self.assertTrue(os.path.exists(os.path.join(WORKING_DIRECTORY, 'bookshelf')))
+        self.assertTrue(os.path.exists(os.path.join(TESTING_DIRECTORY, 'bookshelf')))
 
     def test_dumpfile_created(self):
-        self.assertTrue(os.path.join(WORKING_DIRECTORY, 'bookshelf/bookshelf.dump'))
+        self.assertTrue(os.path.join(TESTING_DIRECTORY, 'bookshelf/bookshelf.dump'))
 
     def test_book_list_creation(self):
         self.assertTrue(isinstance(bookshelf.books, list))
@@ -58,7 +39,7 @@ class BookTest(unittest.TestCase):
 
     def setUp(self):
         global bookshelf, book_1, book_2
-        bookshelf = bs.Bookshelf(WORKING_DIRECTORY)
+        bookshelf = bs.Bookshelf(TESTING_DIRECTORY)
         bookshelf.new_book('Foo')
         bookshelf.new_book('Bar')
 
@@ -66,10 +47,10 @@ class BookTest(unittest.TestCase):
         book_2 = bookshelf.unpickle_book(1)  # Bar
 
     def tearDown(self):
-        shutil.rmtree(os.path.join(WORKING_DIRECTORY, 'bookshelf'))
+        shutil.rmtree(os.path.join(TESTING_DIRECTORY, 'bookshelf'))
 
     def test_correct_book_dir(self):
-        path = os.path.join(WORKING_DIRECTORY, 'bookshelf', book_1.dir_string)
+        path = os.path.join(TESTING_DIRECTORY, 'bookshelf', book_1.dir_string)
         self.assertEqual(path, book_1.book_path)
 
     def test_repeated_entry(self):

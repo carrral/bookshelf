@@ -3,27 +3,10 @@ import datetime as dt
 import random
 import string
 import shutil
-import configparser
+from config.config import *
 from pickle import Pickler, Unpickler
-
 # Constants
 
-CONFIG_FILE = './config/config.ini'
-BOOKSHELF_DATA = './config/bookshelf_data.ini'
-
-config = configparser.ConfigParser()
-config.read(CONFIG_FILE)
-bookshelf_data = configparser.ConfigParser()
-bookshelf_data.read(BOOKSHELF_DATA)
-
-
-SIZE = config.getint('DIRECTORIES', 'dir_str_size')
-BOOKSHELF_PATH = config.get('DIRECTORIES', 'bookshelf_path')
-BOOKSHELF_FILE_EXT = config['file_ext']['bookshelf']
-BOOK_FILE_EXT = config['file_ext']['book']
-ENTRY_FILE_EXT = config['file_ext']['entry']
-AUTHOR = config['info']['author']
-VIM_MODE = config['mode']['vim_mode']
 
 
 # Class definitions
@@ -31,7 +14,7 @@ VIM_MODE = config['mode']['vim_mode']
 # Bookshelf class definition
 
 
-class Bookshelf(object):
+class Bookshelf:
     """Container class for books"""
 
     def __init__(self, base_path):
