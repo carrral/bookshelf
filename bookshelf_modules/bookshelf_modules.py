@@ -5,9 +5,6 @@ import string
 import shutil
 from config.config import *
 from pickle import Pickler, Unpickler
-# Constants
-
-
 
 # Class definitions
 
@@ -49,9 +46,9 @@ class Bookshelf:
     def load_init_list(self):
         file = open(self.bookshelf_file_path, 'rb')
         unpickler = Unpickler(file)
-        list = unpickler.load()
+        list_ = unpickler.load()
         file.close()
-        return list
+        return list_
 
     def pickle_book(self, book, zb_index):
         """Pickles a book in the books' respective directory (zero-based index)"""
@@ -177,7 +174,6 @@ class Bookshelf:
         # TODO Move method to the driver class
         return "".join([random.choice(string.hexdigits) for i in range(n)])
 
-    @staticmethod
     def generate_automatic_title(self):
         """Book title generator"""
         title = " ".join(["Book", self.book_total + 1])

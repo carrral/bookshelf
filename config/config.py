@@ -10,7 +10,7 @@ bookshelf_data = configparser.ConfigParser()
 bookshelf_data.read(BOOKSHELF_DATA)
 
 TESTING_DIRECTORY = config['test']['test_dir']
-TEST_MAIN = config.get('test','test_main')
+TEST_MAIN = config.get('test','test_cli')
 current_book = bookshelf_data.getint('bookshelf', 'selected_book')
 BASE_PATH = config.get('DIRECTORIES', 'base_path')
 SIZE = config.getint('DIRECTORIES', 'dir_str_size')
