@@ -1,8 +1,8 @@
 import click
-from config.config import *
+from config import config_script as c_s
 from bookshelf_modules import bookshelf_modules as bs
 
-working_bookshelf = bs.Bookshelf(TEST_MAIN)
+working_bookshelf = bs.Bookshelf(c_s.TEST_MAIN)
 
 # Function definition
 @click.group()
@@ -11,13 +11,15 @@ def bookshelf(title=None):
 
 
 @bookshelf.command(name='new')
-@click.argument('element', type=click.Choice(['book', 'entry']), required=True)
-@click.option('--title', '-t')
-def new(element, title=None):
-    if element == 'book':
-        click.echo('libro {}'.format(title))
+@click.argument('element_type', type=click.Choice(['book', 'entry']), required=True)
+@click.option('--title', '-t', required=False, type=click.STRING)
+@click.option('--author', '-a', required=False, type=click.STRING)
+def new(element_type, title=None, author=None):
+    if element_type is 'book':
+        working_bookshelf.new_book(title)
     else:
-        click.echo('entrada {}'.format(title))
+        book_ = working_bookshelf.unpickle_book(c_s.current_book)
+        book_.new_entry(title, author)
 
 
 @bookshelf.command(name='list')

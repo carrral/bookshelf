@@ -2,7 +2,7 @@ import unittest
 from bookshelf_modules import bookshelf_modules as bs
 import os
 import shutil
-from config.config import *
+from config.config_script import *
 
 
 class BookshelfTest(unittest.TestCase):

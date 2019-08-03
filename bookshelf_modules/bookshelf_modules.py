@@ -3,7 +3,7 @@ import datetime as dt
 import random
 import string
 import shutil
-from config.config import *
+from config.config_script import *
 from pickle import Pickler, Unpickler
 
 # Class definitions
@@ -191,6 +191,8 @@ class Book(object):
         self.book_path = os.path.join(bookshelf_path, dir_string)
         self.dir_string = dir_string
 
+        self.title = title
+
         # List of tuples self.entries = [('AFDE32','Entry 1),('EDFESA21','Entry 2')]
         self.entries = list()
 
@@ -230,8 +232,11 @@ class Book(object):
 
         return entry
 
-    def new_entry(self, title=None, author=AUTHOR):
+    def new_entry(self, title=None, author=None):
         """Appends an entry to the entries dictionary and pickles it"""
+        if author is None:
+            author = AUTHOR
+
         if title is None:
             title = self.generate_automatic_title()
 

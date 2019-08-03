@@ -3,7 +3,7 @@ from click.testing import CliRunner
 import os
 from bin.cli import working_bookshelf,bookshelf
 import shutil
-from config.config import *
+from config.config_script import *
 
 
 class TestMain(unittest.TestCase):
@@ -23,9 +23,9 @@ class TestMain(unittest.TestCase):
         self.assertTrue(path_exists)
 
     def test_book_creation(self):
-        runner.invoke(bookshelf, ['new', 'book', '-t "Foo Bar"'])
-
-
+        runner.invoke(bookshelf, ['new', 'book', '-t', 'Foo Bar'])
+        book_ = working_bookshelf.unpickle_book(0)
+        self.assertEqual(book_.title, "Foo Bar")
 
 
 if __name__ == '__main__':
